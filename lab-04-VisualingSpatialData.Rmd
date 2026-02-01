@@ -23,13 +23,23 @@ states <- read_csv("data/states.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r dennydata}
+nrow(dennys)
+ncol(dennys)
+glimpse(dennys)
+```
+
+The dimensions are 1643 x 6, where each row indicates a location for a Denny's located indicated by the following variables: address, city, state, zip, longitude, and latitude.
+
 
 ### Exercise 2
+```{r laquintadata}
+nrow(laquinta)
+ncol(laquinta)
+glimpse(laquinta)
+```
 
+The dimensions are 909 x 6, where each row indicates a location for a La Quinta hotel indicated by the following variables: address, city, state, zip, longitude, and latitude.
 Remove this text, and add your answer for Exercise 2 here.
 Add code chunks as needed.
 Don't forget to label your code chunk.
@@ -37,20 +47,55 @@ Do not use spaces in code chunk labels.
 
 ### Exercise 3
 
-...
+After looking at the La Quinta website there are locations outside the U.S in Asia, South America, the Middle East, Europe, Australia and the Pacific Rim, and Canada.
+
+There does not seem to be any locations outside the U.S for Denny's.
+
+In terms of looking at the data I believe I can try to filter for locations that are "NA" for state for La Quinta.
 
 ### Exercise 4
 
-...
+In terms of looking at the data I believe I can try to filter for locations that are "NA" for state for La Quinta.
+
 
 ### Exercise 5
 
-...
+```{r filterUSdennys}
+dennys %>%
+  filter(!(state %in% states$abbreviation))
+
+dennys %>%
+  mutate(country = "United States")
+```
 
 ### Exercise 6
 
-...
+```{r mutateUSdennys}
+
+dennys %>%
+  mutate(country = "United States")
+```
 
  
-Add exercise headings as needed.
+### Exercise 7
 
+There are locations in Canada, Mexico, China, New Zealand, Georgia, Turkiye, United Arab Emirates, Colombia, and Ecudaor. 
+
+### Exercise 8
+```{r outsideUSlq}
+laquinta %>%
+  filter(!(state %in% states$abbreviation))
+
+laquinta %>%
+  mutate(country = case_when(
+    state %in% state.abb ~ "United States",
+    state %in% c("ON", "BC") ~ "Canada",
+    state == "ANT" ~ "Colombia",
+     state %in% c("AG", "QR","CH", "PU", "NL", "VE", "SL" ) ~ "Mexico", state %in% c("ON", "BC") ~ "China"
+  ))
+```
+### Exercise 9
+```{r filterlqUS}
+lq <- lq %>%
+  filter(country == "United States")
+```
