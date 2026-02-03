@@ -86,7 +86,7 @@ There are locations in Canada, Mexico, China, New Zealand, Georgia, Turkiye, Uni
 laquinta %>%
   filter(!(state %in% states$abbreviation))
 
-laquinta %>%
+laquinta <- laquinta %>%
   mutate(country = case_when(
     state %in% state.abb ~ "United States",
     state %in% c("ON", "BC") ~ "Canada",
