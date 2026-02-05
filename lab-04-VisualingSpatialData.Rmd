@@ -95,7 +95,77 @@ laquinta <- laquinta %>%
   ))
 ```
 ### Exercise 9
-```{r filterlqUS}
-lq <- lq %>%
+```{r numUS}
+laquinta <- laquinta %>%
   filter(country == "United States")
+
+dennys %>% count(state)
+laquinta %>% count (state)
 ```
+
+California has the most Denny's locations at 403, and Texas trails slightly behind with 200. The states with low amounts of Denny's have 3 restaurants, the states are South Dakota, West Virginia, New Hampshire, Arkansas.  
+Delaware has the lowest amount at 1 location. 
+
+Texas has the most La Quinta locations by far at 237. Maine has the lowest amount of locations with only 1. 
+
+I do not find this super surprising since I would assume popular tourist spots to have more locations of both La Quinta and Denny's.
+
+### Exercise 10
+```{r joindata}
+dennys %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation"))
+
+laquinta %>% 
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation"))
+
+
+```
+<!--put answers for #9, do area/n and then add it to a new variable to answer square miles question -->
+### Exercise 11
+```{r join}
+dennys <- dennys %>%
+  mutate(establishment = "Denny's")
+  
+laquinta <- laquinta %>%
+  mutate(establishment = "La Quinta")
+  
+dn_lq <- bind_rows(dennys, laquinta)
+
+ggplot(dn_lq, mapping = aes(
+  x = longitude,
+  y = latitude,
+  color = establishment
+)) +
+  geom_point()
+```
+### Exercise 12
+```{r plotNC}
+
+data1 <- dn_lq %>% filter(state == "NC")
+
+ggplot(data1, mapping = aes(
+  x = longitude,
+  y = latitude,
+  color = establishment
+)) + labs(title = "Concentration of Denny's and La Quinta", subtitle = "In North Carolina") +
+  geom_point(alpha= .5)
+```
+
+Yes the joke slightly holds here because every La Quinta is super close to a Denny's, shown by the blue and pink dots overlapping often. 
+
+### Exercise 13
+```{r plotTX}
+
+data2 <- dn_lq %>% filter(state == "TX")
+
+ggplot(data2, mapping = aes(
+  x = longitude,
+  y = latitude,
+  color = establishment
+)) + labs(title = "Concentration of Denny's and La Quinta", subtitle = "In Texas") +
+  geom_point(alpha = .3)
+```
+
+Yes, the joke absolutely holds here. There are many clusters of pink and blue, depicting high concentration of both establishments in the same area. 
