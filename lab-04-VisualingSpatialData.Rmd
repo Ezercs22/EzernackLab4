@@ -122,7 +122,7 @@ laquinta %>%
 
 
 ```
-<!--put answers for #9, do area/n and then add it to a new variable to answer square miles question -->
+<!--put answers for #10, do area/n and then add it to a new variable to answer square miles question -->
 ### Exercise 11
 ```{r join}
 dennys <- dennys %>%
