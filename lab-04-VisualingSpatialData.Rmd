@@ -1,7 +1,7 @@
 ---
 title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
 author: "Charlize Ezernack"
-date: "01-31-2026"
+date: "02-06-2026"
 output: github_document
 ---
 
@@ -114,15 +114,24 @@ I do not find this super surprising since I would assume popular tourist spots t
 ```{r joindata}
 dennys %>%
   count(state) %>%
-  inner_join(states, by = c("state" = "abbreviation"))
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  mutate(dennysarea = (n/area) * 1000) %>%
+  arrange(desc(dennysarea)) %>% select(state, n, dennysarea)
 
 laquinta %>% 
   count(state) %>%
-  inner_join(states, by = c("state" = "abbreviation"))
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  mutate(quintaarea = (n/area) * 1000) %>%
+  arrange(desc(quintaarea)) %>% select(state, n, quintaarea)
+
+
 
 
 ```
 <!--put answers for #10, do area/n and then add it to a new variable to answer square miles question -->
+
+D.C, Rhode Island, and California are the top 3 states for most Denny's location per thousand square miles, and Rhode Island, Florida, and Connecticut are the top 3 states for most La Quinta locations per thousand square miles. 
+
 ### Exercise 11
 ```{r join}
 dennys <- dennys %>%
